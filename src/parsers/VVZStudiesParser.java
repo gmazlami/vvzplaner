@@ -1,5 +1,8 @@
 package parsers;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.htmlparser.Node;
@@ -11,20 +14,19 @@ import org.htmlparser.util.ParserException;
 
 public class VVZStudiesParser {
 
-
 	String URLPrefix = null;
 	String html = null;
-	
 
 	HashMap<String, String> studiesMap = new HashMap<String, String>();
-	HashMap<String, String> facultyMap = new HashMap<String, String>();
+	HashMap<String, List<String>> facultyMap = new HashMap<String, List<String>>();
 
-	public VVZStudiesParser(String htmlCode, String prefix) throws ParserException {
+	public VVZStudiesParser(String htmlCode, String prefix)
+			throws ParserException {
 		html = htmlCode;
 		URLPrefix = prefix;
 	}
 
-	public Map<String, String> parseFaculties() throws ParserException {
+	public Map<String, List<String>> parseFaculties() throws ParserException {
 		HasAttributeFilter f = new HasAttributeFilter("class", "links");
 		Parser parser = new Parser(html);
 		NodeList nl = parser.parse(f);
@@ -33,28 +35,22 @@ public class VVZStudiesParser {
 		for (int i = 0; i < nl.size(); i++) {
 
 			Node node = nl.elementAt(i);
-			faculty = node.getFirstChild().getFirstChild().getFirstChild().getText().trim();
+			faculty = node.getFirstChild().getFirstChild().getFirstChild()
+					.getText().trim();
 
-			System.out.println("Current Faculty:");
-			System.out.println(faculty);
-			System.out.println("----------------");
-			System.out.println();
 			NodeList childList = node.getChildren();
 			NodeList listChilds = childList.elementAt(1).getChildren();
-			
-			for(int j = 0 ; j < listChilds.size(); j++){
-				System.out.println(listChilds.elementAt(j).toPlainTextString().trim());
+
+			List<String> list = new ArrayList<String>();
+			for (int j = 0; j < listChilds.size(); j++) {
+				list.add(listChilds.elementAt(j).toPlainTextString().trim());
 			}
-			
-			System.out.println();
-			
-//			System.out.println(faculty);
-
-
+			facultyMap.put(faculty, list);
 		}
-		return studiesMap;
+		System.out.println(facultyMap);
+		return facultyMap;
 	}
-	
+
 	public Map<String, String> parseStudies() throws ParserException {
 		HasAttributeFilter f = new HasAttributeFilter("class", "internal");
 		// StringBuilder sb = new StringBuilder();
@@ -72,20 +68,15 @@ public class VVZStudiesParser {
 					&& !str.contains("&uuml;") && !str.contains("&ouml;")
 					&& !str.contains("&Auml") && !str.contains("Weiter")
 					&& !str.contains("Double") && !str.contains("Joint")) {
-				// sb.append(node.getChildren().elementAt(0).getText().trim());
-				// sb.append("\n");
 
 				if (node instanceof Tag) {
 					link = ((Tag) node).getAttribute("href");
-					// System.out.println(((Tag)node).getAttribute("href"));
 
 					studiesMap.put(str, URLPrefix + link);
 				}
 
 			}
 		}
-		// return sb.toString();
-		// System.out.println(map);
 		return studiesMap;
 	}
 }
