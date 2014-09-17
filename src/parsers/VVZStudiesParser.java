@@ -11,21 +11,54 @@ import org.htmlparser.util.ParserException;
 
 public class VVZStudiesParser {
 
-	HasAttributeFilter f = new HasAttributeFilter("class", "internal");
 
 	String URLPrefix = null;
+	String html = null;
+	
 
-	Parser parser = null;
-
-	HashMap<String, String> map = new HashMap<String, String>();
+	HashMap<String, String> studiesMap = new HashMap<String, String>();
+	HashMap<String, String> facultyMap = new HashMap<String, String>();
 
 	public VVZStudiesParser(String htmlCode, String prefix) throws ParserException {
-		parser = new Parser(htmlCode);
+		html = htmlCode;
 		URLPrefix = prefix;
 	}
 
-	public Map<String, String> parse() throws ParserException {
+	public Map<String, String> parseFaculties() throws ParserException {
+		HasAttributeFilter f = new HasAttributeFilter("class", "links");
+		Parser parser = new Parser(html);
+		NodeList nl = parser.parse(f);
+		String faculty = null;
+
+		for (int i = 0; i < nl.size(); i++) {
+
+			Node node = nl.elementAt(i);
+			faculty = node.getFirstChild().getFirstChild().getFirstChild().getText().trim();
+
+			System.out.println("Current Faculty:");
+			System.out.println(faculty);
+			System.out.println("----------------");
+			System.out.println();
+			NodeList childList = node.getChildren();
+			NodeList listChilds = childList.elementAt(1).getChildren();
+			
+			for(int j = 0 ; j < listChilds.size(); j++){
+				System.out.println(listChilds.elementAt(j).toPlainTextString().trim());
+			}
+			
+			System.out.println();
+			
+//			System.out.println(faculty);
+
+
+		}
+		return studiesMap;
+	}
+	
+	public Map<String, String> parseStudies() throws ParserException {
+		HasAttributeFilter f = new HasAttributeFilter("class", "internal");
 		// StringBuilder sb = new StringBuilder();
+		Parser parser = new Parser(html);
 		NodeList nl = parser.parse(f);
 		String str = null;
 		String link = null;
@@ -46,13 +79,13 @@ public class VVZStudiesParser {
 					link = ((Tag) node).getAttribute("href");
 					// System.out.println(((Tag)node).getAttribute("href"));
 
-					map.put(str, URLPrefix + link);
+					studiesMap.put(str, URLPrefix + link);
 				}
 
 			}
 		}
 		// return sb.toString();
 		// System.out.println(map);
-		return map;
+		return studiesMap;
 	}
 }
