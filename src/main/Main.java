@@ -1,13 +1,11 @@
 package main;
-import io.HTMLDownloader;
 
-import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.htmlparser.util.ParserException;
 
-import parsers.VVZFacultyParser;
-import parsers.VVZMainStudiesParser;
 import parsers.VVZStudiesParser;
 
 public class Main {
@@ -15,45 +13,59 @@ public class Main {
 	public static void main(String[] args) {
 		String URL = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot.html";
 		String URLPrefix = "www.vorlesungen.uzh.ch/HS14/";
-		String code = null;
+		
+		Map<String, List<String>> facultyTitlesMap = null;
+		Map<String, List<String>> titlesStudiesMap = null;
+		
+		Map<String, String> titlesLinksMap = null;
 		Map<String, String> studiesLinksMap = null;
-
+		
 		try {
-			HTMLDownloader d = new HTMLDownloader(URL);
-			code = d.getHTML();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			VVZStudiesParser p = new VVZStudiesParser(code, URLPrefix);
-
-			studiesLinksMap = p.parseStudies();
-			p.parseFaculties();
-					
+			VVZStudiesParser p = new VVZStudiesParser(URL, URLPrefix);
+			titlesLinksMap = p.parseStudies();
+			facultyTitlesMap = p.parseFaculties();
+			
+			printMap(titlesLinksMap);
+			printMapList(facultyTitlesMap);
+			
 		} catch (ParserException e) {
 			e.printStackTrace();
 		}
+
+		try {
+			VVZStudiesParser p = new VVZStudiesParser(URL,URLPrefix);
+
+			studiesLinksMap = p.parseStudies();
+			titlesStudiesMap = p.parseFaculties();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public static void printMapList(Map<String, List<String>> map){
+
 		
+		String[] array = Arrays.copyOf(map.keySet().toArray(), map.keySet().toArray().length, String[].class);
 		
-//		try{
-//			
-//			VVZMainStudiesParser mp = new VVZMainStudiesParser("http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000007/sc-50306169.html");
-//			mp.parse();
-//			
-//		}catch(ParserException e){
-//			e.printStackTrace();
-//		}
+		for(int i=0;i<array.length;i++){
+			String key = array[i];
+			System.out.println(key);
+			System.out.println(map.get(key));
+			System.out.println();
+		}
+	}
+	
+	public static void printMap(Map<String, String> map){
+		String[] array = Arrays.copyOf(map.keySet().toArray(), map.keySet().toArray().length, String[].class);
 		
-//		try{
-//			
-//			VVZFacultyParser mp = new VVZFacultyParser("http://www.vorlesungen.uzh.ch/HS14/lehrangebot.html", URLPrefix);
-//			mp.parse();
-//			
-//		}catch(ParserException e){
-//			e.printStackTrace();
-//		}
+		for(int i=0;i<array.length;i++){
+			String key = array[i];
+			System.out.println(key);
+			System.out.println(map.get(key));
+			System.out.println();
+		}
 	}
 
 }
