@@ -1,5 +1,7 @@
 package parsers;
 
+import io.Utils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,21 +40,10 @@ public class VVZLecturesParser {
 			if (node instanceof Tag) {
 				link = ((Tag) node).getAttribute("href");
 				link = link.substring(6);
-				linkMap.put(fixUmlauts(str), URLprefix + link);
+				linkMap.put(Utils.fixUmlauts(str), URLprefix + link);
 			}
 		}
 
 		return linkMap;
-	}
-
-	private String fixUmlauts(String input) {
-		String newString = null;
-		newString = input.replace("&Auml;", "Ä");
-		newString = newString.replace("&auml;", "ä");
-		newString = newString.replace("&Uuml;", "Ü");
-		newString = newString.replace("&uuml;", "ü");
-		newString = newString.replace("&Ouml;", "Ö");
-		newString = newString.replace("&ouml;", "ö");
-		return newString;
 	}
 }

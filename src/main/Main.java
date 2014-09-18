@@ -15,7 +15,7 @@ public class Main {
 	public static void main(String[] args) {
 		String URL = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot.html";
 		String URL2 = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50427948/cga-50427948010/cg-50427950.module.html";
-		String URL3 = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50332888/cga-50332888010/cg-50332889/cg-50332892/sm-50159734.modveranst.html";
+		String URL3 = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50332888/cga-50332888010/cg-50332889/sm-50331857.modveranst.html";
 		String URLPrefix = "www.vorlesungen.uzh.ch/HS14/";
 		
 		Map<String, List<String>> facultyTitlesMap = null;
@@ -40,7 +40,8 @@ public class Main {
 //			VVZStudiesParser p = new VVZStudiesParser(URL,URLPrefix);
 //
 //			studiesLinksMap = p.parseStudies();
-//			titlesStudiesMap = p.parseFaculties();
+//			printMap(studiesLinksMap);
+////			titlesStudiesMap = p.parseFaculties();
 //
 //		} catch (Exception e) {
 //			e.printStackTrace();
@@ -53,7 +54,7 @@ public class Main {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		
+//		
 		VVZDetailsParser parser = new VVZDetailsParser(URL3, URLPrefix);
 		try{
 			parser.parse();
