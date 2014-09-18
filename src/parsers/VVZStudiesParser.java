@@ -89,7 +89,6 @@ public class VVZStudiesParser {
 
 				if (node instanceof Tag) {
 					link = ((Tag) node).getAttribute("href");
-//					link = link.substring(6);
 					studiesMap.put(str, URLPrefix + link);
 				}
 

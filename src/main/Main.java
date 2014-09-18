@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import model.Lecture;
+
 import org.htmlparser.util.ParserException;
 
 import parsers.VVZDetailsParser;
@@ -57,7 +59,9 @@ public class Main {
 //		
 		VVZDetailsParser parser = new VVZDetailsParser(URL3, URLPrefix);
 		try{
-			parser.parse();
+			Lecture myLecture = parser.parse();
+			
+			System.out.println(myLecture.toString());
 		}catch(ParserException e){
 			e.printStackTrace();
 		}
