@@ -6,12 +6,14 @@ import java.util.Map;
 
 import org.htmlparser.util.ParserException;
 
+import parsers.VVZLecturesParser;
 import parsers.VVZStudiesParser;
 
 public class Main {
 
 	public static void main(String[] args) {
 		String URL = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot.html";
+		String URL2 = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50427948/cga-50427948010/cg-50427950.module.html";
 		String URLPrefix = "www.vorlesungen.uzh.ch/HS14/";
 		
 		Map<String, List<String>> facultyTitlesMap = null;
@@ -20,25 +22,33 @@ public class Main {
 		Map<String, String> titlesLinksMap = null;
 		Map<String, String> studiesLinksMap = null;
 		
+//		try {
+//			VVZStudiesParser p = new VVZStudiesParser(URL, URLPrefix);
+//			titlesLinksMap = p.parseStudies();
+//			facultyTitlesMap = p.parseFaculties();
+//			
+//			printMap(titlesLinksMap);
+//			printMapList(facultyTitlesMap);
+//			
+//		} catch (ParserException e) {
+//			e.printStackTrace();
+//		}
+//
+//		try {
+//			VVZStudiesParser p = new VVZStudiesParser(URL,URLPrefix);
+//
+//			studiesLinksMap = p.parseStudies();
+//			titlesStudiesMap = p.parseFaculties();
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		
+		VVZLecturesParser parser = new VVZLecturesParser(URL2, URLPrefix);
 		try {
-			VVZStudiesParser p = new VVZStudiesParser(URL, URLPrefix);
-			titlesLinksMap = p.parseStudies();
-			facultyTitlesMap = p.parseFaculties();
-			
-			printMap(titlesLinksMap);
-			printMapList(facultyTitlesMap);
-			
+			parser.parse();
 		} catch (ParserException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			VVZStudiesParser p = new VVZStudiesParser(URL,URLPrefix);
-
-			studiesLinksMap = p.parseStudies();
-			titlesStudiesMap = p.parseFaculties();
-
-		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
