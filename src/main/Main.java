@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.htmlparser.util.ParserException;
 
+import parsers.VVZDetailsParser;
 import parsers.VVZLecturesParser;
 import parsers.VVZStudiesParser;
 
@@ -14,6 +15,7 @@ public class Main {
 	public static void main(String[] args) {
 		String URL = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot.html";
 		String URL2 = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50427948/cga-50427948010/cg-50427950.module.html";
+		String URL3 = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50332888/cga-50332888010/cg-50332889/cg-50332892/sm-50159734.modveranst.html";
 		String URLPrefix = "www.vorlesungen.uzh.ch/HS14/";
 		
 		Map<String, List<String>> facultyTitlesMap = null;
@@ -44,11 +46,18 @@ public class Main {
 //			e.printStackTrace();
 //		}
 		
-		VVZLecturesParser parser = new VVZLecturesParser(URL2, URLPrefix);
-		try {
+//		VVZLecturesParser parser = new VVZLecturesParser(URL2, URLPrefix);
+//		try {
+//			parser.parse();
+//		} catch (ParserException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		VVZDetailsParser parser = new VVZDetailsParser(URL3, URLPrefix);
+		try{
 			parser.parse();
-		} catch (ParserException e) {
-			// TODO Auto-generated catch block
+		}catch(ParserException e){
 			e.printStackTrace();
 		}
 

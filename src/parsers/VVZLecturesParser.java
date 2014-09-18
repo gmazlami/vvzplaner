@@ -1,6 +1,7 @@
 package parsers;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
@@ -20,7 +21,7 @@ public class VVZLecturesParser {
 		this.URLprefix = prefix;
 	}
 
-	public void parse() throws ParserException {
+	public Map<String, String> parse() throws ParserException {
 		Parser parser = new Parser();
 		parser.setResource(resourceURL);
 		HasAttributeFilter f = new HasAttributeFilter("class", "internal");
@@ -41,8 +42,7 @@ public class VVZLecturesParser {
 			}
 		}
 
-		System.out.println(linkMap);
-
+		return linkMap;
 	}
 
 	private String fixUmlauts(String input) {
