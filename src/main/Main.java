@@ -19,20 +19,23 @@ public class Main {
 		String URL2 = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50427948/cga-50427948010/cg-50427950.module.html";
 		String URL3 = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50332888/cga-50332888010/cg-50332889/sm-50331857.modveranst.html";
 		String URLPrefix = "www.vorlesungen.uzh.ch/HS14/";
+		String biovorlesung = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000008/sc-50503822/cga-50503822010/cg-50017280/sm-50030313.modveranst.html";
+		String infoHauptfach = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50427948.html";
+		String sosy = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50427948/cga-50427948010/cg-50427950.module.html";
 		
-		Map<String, List<String>> facultyTitlesMap = null;
-		Map<String, List<String>> titlesStudiesMap = null;
-		
-		Map<String, String> titlesLinksMap = null;
-		Map<String, String> studiesLinksMap = null;
-		
+//		Map<String, List<String>> facultyTitlesMap = null;
+//		Map<String, List<String>> titlesStudiesMap = null;
+//		
+//		Map<String, String> titlesLinksMap = null;
+//		Map<String, String> studiesLinksMap = null;
+//		
 //		try {
 //			VVZStudiesParser p = new VVZStudiesParser(URL, URLPrefix);
 //			titlesLinksMap = p.parseStudies();
 //			facultyTitlesMap = p.parseFaculties();
 //			
 //			printMap(titlesLinksMap);
-//			printMapList(facultyTitlesMap);
+////			printMapList(facultyTitlesMap);
 //			
 //		} catch (ParserException e) {
 //			e.printStackTrace();
@@ -49,22 +52,25 @@ public class Main {
 //			e.printStackTrace();
 //		}
 		
-//		VVZLecturesParser parser = new VVZLecturesParser(URL2, URLPrefix);
-//		try {
-//			parser.parse();
-//		} catch (ParserException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-		VVZDetailsParser parser = new VVZDetailsParser(URL3, URLPrefix);
-		try{
-			Lecture myLecture = parser.parse();
-			
-			System.out.println(myLecture.toString());
-		}catch(ParserException e){
+		VVZLecturesParser parser = new VVZLecturesParser(sosy, URLPrefix);
+		Map<String, String> map = null;
+		try {
+			map = parser.parse();
+		} catch (ParserException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		System.out.println(map);
+//		
+//		VVZDetailsParser parser = new VVZDetailsParser(biovorlesung, URLPrefix);
+//		try{
+//			Lecture myLecture = parser.parse();
+//			
+//			System.out.println(myLecture.toString());
+//		}catch(ParserException e){
+//			e.printStackTrace();
+//		}
 
 	}
 	
