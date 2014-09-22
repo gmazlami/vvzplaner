@@ -1,6 +1,7 @@
 package main;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,8 @@ import parsers.VVZStudiesParser;
 
 public class Main {
 
+	private static HashMap<String, HashMap<String, String>> map;
+
 	public static void main(String[] args) {
 		String URL = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot.html";
 		String URL2 = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50427948/cga-50427948010/cg-50427950.module.html";
@@ -25,7 +28,7 @@ public class Main {
 		String sosy = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50427948/cga-50427948010/cg-50427950.module.html";
 		String wiwi = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50014157/cga-50014157010/cg-50017343.module.html";
 
-		String majors = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000008/sc-50544113.html";
+		String majors = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50427948.html";
 		
 		
 		Map<String, List<String>> facultyTitlesMap = null;
@@ -50,7 +53,8 @@ public class Main {
 		
 		try{
 			VVZMajorMinorParser parser  = new VVZMajorMinorParser(majors, URLPrefix);
-			parser.parseMajorMinor();
+			map = parser.parseMajorMinor();
+			System.out.println(map);
 		}catch(ParserException e){
 			e.printStackTrace();
 		}
