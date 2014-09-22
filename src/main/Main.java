@@ -10,6 +10,7 @@ import org.htmlparser.util.ParserException;
 
 import parsers.VVZDetailsParser;
 import parsers.VVZLecturesParser;
+import parsers.VVZMajorMinorParser;
 import parsers.VVZStudiesParser;
 
 public class Main {
@@ -24,14 +25,14 @@ public class Main {
 		String sosy = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50427948/cga-50427948010/cg-50427950.module.html";
 		String wiwi = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50014157/cga-50014157010/cg-50017343.module.html";
 
-		String arab = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000007/sc-50306169/cga-50306169160/cg-50309278.module.html";
+		String majors = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000008/sc-50544113.html";
 		
 		
-		//		Map<String, List<String>> facultyTitlesMap = null;
-//		Map<String, List<String>> titlesStudiesMap = null;
-//		
-//		Map<String, String> titlesLinksMap = null;
-//		Map<String, String> studiesLinksMap = null;
+		Map<String, List<String>> facultyTitlesMap = null;
+		Map<String, List<String>> titlesStudiesMap = null;
+
+		Map<String, String> titlesLinksMap = null;
+		Map<String, String> studiesLinksMap = null;
 //		
 //		try {
 //			VVZStudiesParser p = new VVZStudiesParser(URL, URLPrefix);
@@ -45,25 +46,36 @@ public class Main {
 //			e.printStackTrace();
 //		}
 //
+		
+		
+		try{
+			VVZMajorMinorParser parser  = new VVZMajorMinorParser(majors, URLPrefix);
+			parser.parseMajorMinor();
+		}catch(ParserException e){
+			e.printStackTrace();
+		}
+		
+		
 //		try {
-//			VVZStudiesParser p = new VVZStudiesParser(URL,URLPrefix);
+//			VVZStudiesParser p = new VVZStudiesParser(majors,URLPrefix);
 //
 //			studiesLinksMap = p.parseStudies();
-//			printMap(studiesLinksMap);
-////			titlesStudiesMap = p.parseFaculties();
-//
+////			printMap(studiesLinksMap);
+//			titlesStudiesMap = p.parseFaculties();
+//			printMapList(titlesStudiesMap);
+//			
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
 		
-		VVZLecturesParser parser = new VVZLecturesParser(wiwi, URLPrefix);
-		Map<String, String> map = null;
-		try {
-			System.out.println(parser.parse());
-		} catch (ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		VVZLecturesParser parser = new VVZLecturesParser(arab, URLPrefix);
+//		Map<String, String> map = null;
+//		try {
+//			System.out.println(parser.parse());
+//		} catch (ParserException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 //		System.out.println(map);
 //		
