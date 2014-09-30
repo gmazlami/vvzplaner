@@ -13,6 +13,7 @@ import parsers.VVZDetailsParser;
 import parsers.VVZLecturesParser;
 import parsers.VVZMMParser;
 import parsers.VVZMajorMinorParser;
+import parsers.VVZMedLecturesParser;
 import parsers.VVZStudiesParser;
 
 public class Main {
@@ -31,13 +32,15 @@ public class Main {
 		String wiwi = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50014157/cga-50014157010/cg-50017343.module.html";
 
 		String majors = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000008/sc-50544113.html";
-		
+		String medLectures = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000976/sc-50493524/cga-50493524010/cg-50493525.veranstaltungen.html";
 		
 		Map<String, List<String>> facultyTitlesMap = null;
 		Map<String, List<String>> titlesStudiesMap = null;
 
 		Map<String, String> titlesLinksMap = null;
 		Map<String, String> studiesLinksMap = null;
+		
+		
 //		
 //		try {
 //			VVZStudiesParser p = new VVZStudiesParser(URL, URLPrefix);
@@ -51,13 +54,13 @@ public class Main {
 //			e.printStackTrace();
 //		}
 //
-		try{
-			VVZMMParser parser = new VVZMMParser(majors, URLPrefix);
-			linkMap = parser.parseMajorMinor();
-			System.out.println(linkMap);
-		}catch(ParserException e){
-			e.printStackTrace();
-		}
+//		try{
+//			VVZMMParser parser = new VVZMMParser(majors, URLPrefix);
+//			linkMap = parser.parseMajorMinor();
+//			System.out.println(linkMap);
+//		}catch(ParserException e){
+//			e.printStackTrace();
+//		}
 		
 //		try{
 //			VVZMajorMinorParser parser  = new VVZMajorMinorParser(majors, URLPrefix);
@@ -80,14 +83,13 @@ public class Main {
 //			e.printStackTrace();
 //		}
 		
-//		VVZLecturesParser parser = new VVZLecturesParser(arab, URLPrefix);
-//		Map<String, String> map = null;
-//		try {
-//			System.out.println(parser.parse());
-//		} catch (ParserException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		VVZMedLecturesParser parser = new VVZMedLecturesParser(medLectures, URLPrefix);
+		try {
+			System.out.println(parser.parseSites());
+		} catch (ParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 //		System.out.println(map);
 //		
