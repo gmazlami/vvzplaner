@@ -11,12 +11,14 @@ import org.htmlparser.util.ParserException;
 
 import parsers.VVZDetailsParser;
 import parsers.VVZLecturesParser;
+import parsers.VVZMMParser;
 import parsers.VVZMajorMinorParser;
 import parsers.VVZStudiesParser;
 
 public class Main {
 
 	private static HashMap<String, HashMap<String, String>> map;
+	private static HashMap<String, String> linkMap;
 
 	public static void main(String[] args) {
 		String URL = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot.html";
@@ -28,7 +30,7 @@ public class Main {
 		String sosy = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50427948/cga-50427948010/cg-50427950.module.html";
 		String wiwi = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50014157/cga-50014157010/cg-50017343.module.html";
 
-		String majors = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000003/sc-50427948.html";
+		String majors = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000008/sc-50544113.html";
 		
 		
 		Map<String, List<String>> facultyTitlesMap = null;
@@ -49,15 +51,21 @@ public class Main {
 //			e.printStackTrace();
 //		}
 //
-		
-		
 		try{
-			VVZMajorMinorParser parser  = new VVZMajorMinorParser(majors, URLPrefix);
-			map = parser.parseMajorMinor();
-			System.out.println(map);
+			VVZMMParser parser = new VVZMMParser(majors, URLPrefix);
+			linkMap = parser.parseMajorMinor();
+			System.out.println(linkMap);
 		}catch(ParserException e){
 			e.printStackTrace();
 		}
+		
+//		try{
+//			VVZMajorMinorParser parser  = new VVZMajorMinorParser(majors, URLPrefix);
+//			linkMap = parser.parseMajorMinorLinks();
+//			System.out.println(linkMap);
+//		}catch(ParserException e){
+//			e.printStackTrace();
+//		}
 		
 		
 //		try {

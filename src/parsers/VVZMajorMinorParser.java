@@ -26,14 +26,71 @@ public class VVZMajorMinorParser {
 		URLPrefix = prefix;
 	}
 
-	public List<String> extractMajors(
+	
+	public List<String> parseMajors() throws ParserException{
+		return extractMajors(parseMajorMinor());
+	}
+	
+	public HashMap<String, List<String>> parseMajorsStudies() throws ParserException{
+		return extractMajorsStudiesMap(parseMajorMinor());
+	}
+	
+	
+	public HashMap<String, String> parseMajorMinorLinks()
+			throws ParserException {
+		HasAttributeFilter filter = new HasAttributeFilter("class",
+				"linked noimage");
+		Parser parser = new Parser();
+		parser.setResource(URL);
+
+		HashMap<String, HashMap<String, String>> majorMinorMap = new HashMap<String, HashMap<String, String>>();
+		HashMap<String, String> linksMap = new HashMap<String, String>();
+		NodeList nl = parser.parse(filter);
+		for (int i = 0; i < nl.size(); i++) {
+
+			Node rootMajorMinor = nl.elementAt(i);
+			Node majorMinor = rootMajorMinor.getFirstChild();
+			Node firstStudy = rootMajorMinor.getNextSibling().getFirstChild();
+
+			String majorMinorString = majorMinor.toPlainTextString().trim();
+
+			Node current = firstStudy;
+
+			while (current != null) {
+
+				String currentString = current.toPlainTextString().trim();
+				if (!currentString.contains("Dieses Studienprogramm")
+						&& !currentString.contains("vom neuen")) {
+					String str = current.toHtml().trim();
+					String[] first = str.split("A href=\"");
+					String[] scnd = first[1].split("\" class=\"internal\">");
+					String link = scnd[0];
+					if (link.contains("../../")) {
+						link = link.replace("../../", "");
+						String postFix ="";
+						if(majorMinorString.contains("Hauptfach")){
+							postFix = majorMinorString.replace("Hauptfach", "HF");
+						}else if(majorMinorString.contains("Nebenfach")){
+							postFix = majorMinorString.replace("Nebenfach", "NF");
+						}
+						linksMap.put(currentString+" "+postFix, URLPrefix + link);
+					}
+				}
+				current = current.getNextSibling();
+			}
+			majorMinorMap.put(majorMinorString, linksMap);
+		}
+		return linksMap;
+	}
+	
+	private List<String> extractMajors(
 			HashMap<String, HashMap<String, String>> map) {
 		String[] array = new String[map.keySet().size()];
 		array = map.keySet().toArray(array);
 		return Arrays.asList(array);
 	}
 
-	public HashMap<String, List<String>> extractMajorsStudiesMap(
+	private HashMap<String, List<String>> extractMajorsStudiesMap(
 			HashMap<String, HashMap<String, String>> map) {
 		HashMap<String, List<String>> result = new HashMap<String, List<String>>();
 		for (String s : map.keySet()) {
@@ -46,7 +103,9 @@ public class VVZMajorMinorParser {
 	}
 	
 
-	public HashMap<String, HashMap<String, String>> parseMajorMinor()
+	
+	
+	private HashMap<String, HashMap<String, String>> parseMajorMinor()
 			throws ParserException {
 		HasAttributeFilter filter = new HasAttributeFilter("class",
 				"linked noimage");
