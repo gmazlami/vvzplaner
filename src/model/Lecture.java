@@ -1,31 +1,25 @@
 package model;
 
+import java.util.HashMap;
+
 public class Lecture {
 
 	private String title;
 	private String description;
-	private String beginTime;
-	private String endTime;
-	private String day;
 	private String docent;
-	private String location;
 	private String exam;
 	private String points;
+	private HashMap<String, BeginEndLocation> dayBeginEndTimeLocation;
 	
 	
-	public Lecture(String title, String description, String beginTime,
-			String endTime, String day, String docent, String location,
-			String exam, String points) {
+	public Lecture(String title, String description,String docent,String exam, String points, HashMap<String, BeginEndLocation> dayBeginEndTimeMap) {
 		super();
 		this.title = title;
 		this.description = description;
-		this.beginTime = beginTime;
-		this.endTime = endTime;
-		this.day = day;
 		this.docent = docent;
-		this.location = location;
 		this.exam = exam;
 		this.points = points;
+		this.dayBeginEndTimeLocation = dayBeginEndTimeMap;
 	}
 
 	public String getTitle() {
@@ -44,28 +38,13 @@ public class Lecture {
 		this.description = description;
 	}
 
-	public String getBeginTime() {
-		return beginTime;
+	public HashMap<String, BeginEndLocation> getDayBeginEndTime() {
+		return dayBeginEndTimeLocation;
 	}
 
-	public void setBeginTime(String beginTime) {
-		this.beginTime = beginTime;
-	}
-
-	public String getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
-	}
-
-	public String getDay() {
-		return day;
-	}
-
-	public void setDay(String day) {
-		this.day = day;
+	public void setDayBeginEndTime(
+			HashMap<String, BeginEndLocation> dayBeginEndTime) {
+		this.dayBeginEndTimeLocation = dayBeginEndTime;
 	}
 
 	public String getDocent() {
@@ -74,14 +53,6 @@ public class Lecture {
 
 	public void setDocent(String docent) {
 		this.docent = docent;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
 	}
 
 	public String getExam() {
@@ -102,7 +73,7 @@ public class Lecture {
 	
 	
 	public String toString(){
-		return "Lecture: {"+title+","+location+","+day+","+beginTime+","+endTime+","+docent+","+points+","+"}" ;
+		return "Lecture: {"+title+","+dayBeginEndTimeLocation+","+docent+","+points+","+"}" ;
 		
 	}
 		

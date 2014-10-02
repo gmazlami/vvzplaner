@@ -33,7 +33,7 @@ public class Main {
 
 		String majors = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000008/sc-50544113.html";
 		String medLectures = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000976/sc-50493524/cga-50493524010/cg-50493525.veranstaltungen.html";
-		
+		String medVorlesung = "http://www.vorlesungen.uzh.ch/HS14/lehrangebot/fak-50000976/sc-50493524/cga-50493524010/cg-50493525/e-50693482.details.html";
 		Map<String, List<String>> facultyTitlesMap = null;
 		Map<String, List<String>> titlesStudiesMap = null;
 
@@ -83,24 +83,24 @@ public class Main {
 //			e.printStackTrace();
 //		}
 		
-		VVZMedLecturesParser parser = new VVZMedLecturesParser(medLectures, URLPrefix);
-		try {
-			System.out.println(parser.parseSites());
-		} catch (ParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		VVZMedLecturesParser parser = new VVZMedLecturesParser(medLectures, URLPrefix);
+//		try {
+//			System.out.println(parser.parseSites());
+//		} catch (ParserException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 //		System.out.println(map);
 //		
-//		VVZDetailsParser parser = new VVZDetailsParser(biovorlesung, URLPrefix);
-//		try{
-//			Lecture myLecture = parser.parse();
-//			
-//			System.out.println(myLecture.toString());
-//		}catch(ParserException e){
-//			e.printStackTrace();
-//		}
+		VVZDetailsParser parser = new VVZDetailsParser(medVorlesung, URLPrefix);
+		try{
+			Lecture myLecture = parser.parse();
+			
+			System.out.println(myLecture.toString());
+		}catch(ParserException e){
+			e.printStackTrace();
+		}
 
 	}
 	
