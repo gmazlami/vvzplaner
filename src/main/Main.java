@@ -10,6 +10,7 @@ import model.Lecture;
 import org.htmlparser.util.ParserException;
 
 import parsers.VVZDetailsParser;
+import parsers.VVZFreeSearchParser;
 import parsers.VVZLecturesParser;
 import parsers.VVZMMParser;
 import parsers.VVZMajorMinorParser;
@@ -37,6 +38,8 @@ public class Main {
 		Map<String, List<String>> facultyTitlesMap = null;
 		Map<String, List<String>> titlesStudiesMap = null;
 
+		String detailsSearchLink = "http://www.vorlesungen.uzh.ch/HS14/suche/sm-50019439.modveranst.html";
+		
 		Map<String, String> titlesLinksMap = null;
 		Map<String, String> studiesLinksMap = null;
 		
@@ -93,14 +96,22 @@ public class Main {
 		
 //		System.out.println(map);
 //		
-		VVZDetailsParser parser = new VVZDetailsParser(medVorlesung, URLPrefix);
+//		VVZDetailsParser parser = new VVZDetailsParser(detailsSearchLink, URLPrefix);
+//		try{
+//			Lecture myLecture = parser.parse();
+//			
+//			System.out.println(myLecture.toString());
+//		}catch(ParserException e){
+//			e.printStackTrace();
+//		}
+		
+		VVZFreeSearchParser parser = new VVZFreeSearchParser("HS14", "database");
 		try{
-			Lecture myLecture = parser.parse();
-			
-			System.out.println(myLecture.toString());
+			parser.getLectureLinks();
 		}catch(ParserException e){
 			e.printStackTrace();
 		}
+		
 
 	}
 	
